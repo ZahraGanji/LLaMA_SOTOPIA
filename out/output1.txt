@@ -1,0 +1,1 @@
+{'movie_scene': 'The Godfather', 'scenario': {'context': 'A time of great uncertainty', 'goal': 'To achieve a common goal', 'constraints': ['Agent Michael Corleone must ask Agent Fredo']}}

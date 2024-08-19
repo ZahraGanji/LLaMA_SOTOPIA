@@ -1,0 +1,1 @@
+{'movie_scene': {'description': "A scene from the movie 'Interstellar'.", 'characters_involved': 'Captain NASA Amelia Brand, Dr. Brand,', 'setting': 'The future.', 'conflict_nature': 'Cooperation'}, 'scenario': {'context': 'In the future', 'goal': 'To find a new home for humanity', 'constraints': ['', 'Only one agent can be activated at a time'], 'interaction': 'Amelia: \\'}}

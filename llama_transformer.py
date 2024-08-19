@@ -12,8 +12,26 @@ json_schema = {
     "type": "object",
     "properties": {
         "movie_scene": {
-            "type": "string",
-            "description": "A detailed description of a specific movie scene illustrating the 'conflict' type of social interaction."
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "A detailed description of a specific movie scene illustrating the 'exchange' type of social interaction."
+                },
+                "characters_involved": {
+                    "type": "string",
+                    "description": "The characters involved in the movie scene."
+                },
+                "setting": {
+                    "type": "string",
+                    "description": "The setting of the movie scene."
+                },
+                "conflict_nature": {
+                    "type": "string",
+                    "description": "The nature of the conflict or interaction in the scene."
+                }
+            },
+            "required": ["description", "characters_involved", "setting", "conflict_nature"]
         },
         "scenario": {
             "type": "object",
@@ -32,9 +50,13 @@ json_schema = {
                         "type": "string"
                     },
                     "description": "Constraints or conditions related to the scenario."
+                },
+                "interaction": {
+                    "type": "string",
+                    "description": "The detailed interaction between the agents."
                 }
             },
-            "required": ["context", "goal", "constraints"]
+            "required": ["context", "goal", "constraints", "interaction"]
         }
     },
     "required": ["movie_scene", "scenario"]
@@ -43,13 +65,13 @@ json_schema = {
 # Step 5: Define your prompt
 prompt = """
 ### Instruction ###
-Please answer the following questions in sequence, providing concise responses in text format. When generating scenarios, substitute the names of movie characters with more general terms such as "agents" to ensure broader applicability.
+Please answer the following questions in a structured JSON format. Provide detailed responses to ensure comprehensive coverage of each aspect.
 
 ### Question 1 ###
-Provide a detailed description of a specific movie scene that illustrates the "conflict" type of human social interaction. Describe the scene in detail, including the characters involved, the nature of the conflict, and the setting.
+Identify a movie scene that demonstrates the "exchange" type of human social interaction from the following categories: exchange, competition, cooperation, conflict, and coercion. Describe the scene in detail, including the characters involved, the nature of the interaction, and the setting.
 
-### Question 3 ###
-Generate a scenario of human interactions based on the given movie scene and relationship constraints between characters. Include the context, goal, and constraints for the scenario.
+### Question 2 ###
+Based on the identified movie scene, generate a scenario of human interactions, including the context, goal, constraints, and detailed interaction between the agents. Ensure that the scenario reflects the essence of the 'exchange' interaction type.
 """
 
 # Step 6: Create a Jsonformer instance
