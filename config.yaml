@@ -1,0 +1,4 @@
+MODEL_NAME : "meta-llama/Meta-Llama-3.1-8B-Instruct"
+interaction_type: ""
+prompt: ""
+judges_no: 3
