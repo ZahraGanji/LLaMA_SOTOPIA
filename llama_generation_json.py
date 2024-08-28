@@ -54,30 +54,77 @@ json_schema_scenario = {
 def llama_3_scene_prompt_creation(description):
 
     json_format = {
-        "description": {"A consise description of a movie scene"},
-        "characters_involved": {"List of characters involved in the movie scene"},
-        "setting": {"Time and place where a scene occurs, including the physical environment and cultural context. It helps establish the mood and tone, influencing the story and characters."},
-        "scene_nature": {"The nature of the scene. Can be: exchange, competition, cooperation, conflict, and coercion." }
-        }
+        "title": "Title of the movie",
+        "description": "A description of the movie scene",
+        "characters_involved": ["List of characters involved in the movie scene"],
+        "setting": "Time and place where the scene occurs, including the physical environment and cultural context. This helps establish the mood and tone, influencing the story and characters.",
+        "goals_and_motivations": "The goals and motivations of each character in the scene"
+    }
+
 
     system_message = f"""
     #### Persona: ###
-    "You are a movie expert. Especially, you have a great memory of movie scenes. For every 5 types of human interaction: exchange, competition, cooperation, conflict, and coercion",
-    you will find a detailed movie scene that encapsulates that interaction type.
-
+    Imagine you are a movie expert with an exceptional memory for movie scenes. 
+    Your deep understanding of human social interactions allows you to categorize them into five key
+    types: exchange, competition, cooperation, conflict, and coercion.  
     ### Goal: ###
-    You will extract a movie scene based on the user input. You must include:
-    - A description of the scene
-    - The characters involved
+    When the user requests an example from any of these categories, provide a detailed description of a relevant movie scene,
+    including:
+    - Title of the movie
+    - A vivid description of the scene
+    - The key characters involved
     - The setting of the movie scene
-    - The nature of the scene: exchange, competition, cooperation, conflict, and coercion
+    - The goals and motivations of each character
     """
 
     # TODO make a good prompt here 
     user_message = f""" 
     ### Question: ###
-    
+    Please find a movie scene that demonstrates an 'exchange' type of human social interaction.
 
+    ### Format: ###
+    You should choose one of the options.
+    Use the following json format:
+    {json_format}
+    """
+    messages = [
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_message},
+        ]
+    
+    return(messages)
+
+def llama_3_scenario_prompt_creation(description, movie_scene):
+
+    json_format = {
+        "description": "A description of the movie scene.",
+        "details":
+        { 
+            "setting": "Describe the time, place, and context of the scenario.", 
+            "goal": "Explain the objectives of the agents involved.",
+            "interaction": "Provide a detailed account of how the agents interact with one another." }
+        }
+
+
+    system_message = f"""
+    #### Persona: ###
+    Imagine you are a movie expert with an exceptional memory for film scenes and a deep
+    understanding of human social interactions. You categorize these interactions into five key types:
+    exchange, competition, cooperation, conflict, and coercion.
+    ### Goal: ###
+    When the user requests you to generate scenarios based on the given movie scene, use general terms like "agents" instead of specific character names to ensure broader applicability.
+    Include the following details in your scenario description:
+
+    - Setting: Describe the time, place, and context of the scenario.
+    - Goal: Explain the objectives of the agents involved.
+    - Interaction: Provide a detailed account of how the agents interact with one another.
+    """
+
+    # TODO make a good prompt here 
+    user_message = f""" 
+    ### Question: ###
+    Based on the extracted movie scene {movie_scene}, which exemplifies the 'exchange' type of human interaction, please generate a detailed description of the human interaction scenario.
+   
     ### Format: ###
     You should choose one of the options.
     Use the following json format:
