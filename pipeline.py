@@ -45,10 +45,12 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model = AutoModelForCausalLM.from_pretrained(MODEL_NAME)
 print("____extracting_movie_scene_____")
 # extract the movie scene
-movie_scene = extract_movie_scene(interaction_type, model, tokenizer, json_schema_movie_scene, 500)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
+movie_scene = extract_movie_scene(interaction_type, model, tokenizer, json_schema_movie_scene, 1000)
 # generate the scenario
-# scenario = generate_scenario(movie_scene["description"], interaction_type, model, tokenizer, json_schema_scenario, 2000)
-# print(scenario)
+scenario = generate_scenario(movie_scene["description"], interaction_type, model, tokenizer, json_schema_scenario, 1000)
+print(scenario)
 # evaluate whether the scenario is real or made up
 # scenario_judges = [AutoModelForCausalLM.from_pretrained(MODEL_NAME) for _ in range(judges_no)]
 # json_schema_evaluation = { #TODO move into a separate file
