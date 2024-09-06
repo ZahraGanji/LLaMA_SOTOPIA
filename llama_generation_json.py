@@ -1,32 +1,5 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-# Step 3: Load the pre-trained model and tokenizer
-model_name = "databricks/dolly-v2-12b"
-model = AutoModelForCausalLM.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-# Step 4: Define individual prompts for each part
-prompt_movie_scene = """
-### Instruction ###
-Please provide a detailed description of a movie scene that demonstrates the "exchange" type of human social interaction.
-Include the following details:
-- A description of the scene
-- The characters involved
-- The setting
-- The nature of the conflict or interaction
-"""
-
-prompt_scenario = """
-### Instruction ###
-Based on the identified movie scene, please generate a scenario of human interactions and provide a detailed description of it. 
-When generating scenarios, substitute the names of movie characters with more general terms such as "agents" to ensure broader applicability.
-Include the following details:
-
-1. A description of the scene
-2. **Goal**: Describe the goal of the human interaction scenario.
-3. **Constraints**: List the constraints or conditions related to the scenario.
-4. **Interaction**: Describe the detailed interaction between the agents in the scenario.
-"""
+from jsonformer import Jsonformer
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
 # Step 5: Define JSON schema
 json_schema_movie_scene = {
@@ -51,8 +24,8 @@ json_schema_scenario = {
     "required": ["description", "goal", "constraints", "interaction"]
 }
 
-def llama_3_scene_prompt_creation(description):
-
+def llama_3_scene_prompt_creation(interaction_type):
+    print("in llama_3_scene_prompt_creation")
     json_format = {
         "title": "Title of the movie",
         "description": "A description of the movie scene",
@@ -80,10 +53,10 @@ def llama_3_scene_prompt_creation(description):
     # TODO make a good prompt here 
     user_message = f""" 
     ### Question: ###
-    Please find a movie scene that demonstrates an 'exchange' type of human social interaction.
+    Please find a movie scene that demonstrates an {interaction_type} type of human social interaction. Your output should be a description of a movie
+    scene with accordance to your instructions.
 
     ### Format: ###
-    You should choose one of the options.
     Use the following json format:
     {json_format}
     """
@@ -94,7 +67,7 @@ def llama_3_scene_prompt_creation(description):
     
     return(messages)
 
-def llama_3_scenario_prompt_creation(description, movie_scene):
+def llama_3_scenario_prompt_creation(movie_scene, interaction_type):
 
     json_format = {
         "description": "A description of the movie scene.",
@@ -123,10 +96,9 @@ def llama_3_scenario_prompt_creation(description, movie_scene):
     # TODO make a good prompt here 
     user_message = f""" 
     ### Question: ###
-    Based on the extracted movie scene {movie_scene}, which exemplifies the 'exchange' type of human interaction, please generate a detailed description of the human interaction scenario.
+    Based on the extracted movie scene {movie_scene}, which exemplifies the {interaction_type} type of human interaction, please generate a detailed description of the human interaction scenario.
    
     ### Format: ###
-    You should choose one of the options.
     Use the following json format:
     {json_format}
     """
@@ -137,47 +109,34 @@ def llama_3_scenario_prompt_creation(description, movie_scene):
     
     return(messages)
 
-def generate_text(prompt, model, tokenizer, max_length=1000):
-    inputs = tokenizer(prompt, return_tensors="pt")
-    output = model.generate(
-        inputs["input_ids"],
-        max_length=1500,  # Adjust as needed
-        num_return_sequences=1,
-        no_repeat_ngram_size=2,
-        early_stopping=True
-    )
-    return tokenizer.decode(output[0], skip_special_tokens=True)
-
-def generate_movie_scene(prompt, model, tokenizer, json_schema, max_length):
-    messages = llama_3_scene_prompt_creation(description)
+def generate_scenario(movie_scene_description, interaction_type, model, tokenizer, json_schema, max_length):
+    messages = llama_3_scenario_prompt_creation(movie_scene_description, interaction_type)
     prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, return_tensors="pt")
     jsonformer = Jsonformer(model, tokenizer, json_schema, prompt, max_number_tokens=max_length,
                         max_array_length=max_length,
                         max_string_token_length=max_length)
-    generated_data = jsonformer()
-    return generated_data
+    extracted_data = jsonformer()
+    return extracted_data
 
-# Step 6: Generate JSON data for each part
-movie_scene_text = generate_movie_scene(prompt, model, tokenizer, json_schema_movie_scene, 2000) # TODO experiment with a good number of max tokens
-scenario_text = generate_text(prompt_scenario, model, tokenizer)
 
-# Step 7: Print the generated JSON
-import json
+def extract_movie_scene(interaction_type, model, tokenizer, json_schema, max_length=500):
+    messages = llama_3_scene_prompt_creation(interaction_type)
+    print(messages)
+    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, return_tensors="pt")
+    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt,max_number_tokens=500,
+                        max_array_length=500,
+                        max_string_token_length=500)
+    extracted_data = jsonformer()
+    return extracted_data
 
-# Assuming you would like to manually structure the outputs as JSON
-generated_data = {
-    "movie_scene": {
-        "description": movie_scene_text.split('\n')[0],  # Example extraction, adjust based on actual output
-        "characters_involved": movie_scene_text.split('\n')[1],  # Example extraction
-        "setting": movie_scene_text.split('\n')[2],  # Example extraction
-        "conflict_nature": movie_scene_text.split('\n')[3]  # Example extraction
-    },
-    "scenario": {
-        "description": scenario_text.split('\n')[0],  # Example extraction, adjust based on actual output
-        "goal": scenario_text.split('\n')[1],  # Example extraction
-        "constraints": scenario_text.split('\n')[2].split(', '),  # Example extraction
-        "interaction": scenario_text.split('\n')[3]  # Example extraction
-    }
-}
+model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
 
-print(json.dumps(generated_data, indent=2))
+movie_scene_text = extract_movie_scene("conflict", model, tokenizer, json_schema_movie_scene)
+print(movie_scene_text)
+# # Step 6: Generate JSON data for each part
+# movie_scene_text = extract_movie_scene(prompt, model, tokenizer, json_schema_movie_scene, 2000) # TODO experiment with a good number of max tokens
+# scenario_text = generate_scenario(prompt_scenario, model, tokenizer)
+
+
