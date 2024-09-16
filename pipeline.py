@@ -18,10 +18,10 @@ MODEL_NAME = "meta-llama/Meta-Llama-3.1-70B"
 Model_judge = ["meta-llama/Meta-Llama-3-8B-Instruct","databricks/dolly-v2-12b","meta-llama/Meta-Llama-3.1-8B"]
 
 
-# interaction_types = ["exchange", "competition", "cooperation", "conflict", "coercion"]
-# scenes_per_type = 10
-scenes_per_type = 1
-interaction_types = ["exchange"]
+interaction_types = ["exchange", "competition", "cooperation", "conflict", "coercion"]
+scenes_per_type = 10
+
+
 =======
 # config = parse_yaml("config.yaml")
 MODEL_NAME = "meta-llama/Meta-Llama-3.1-8B-Instruct"
