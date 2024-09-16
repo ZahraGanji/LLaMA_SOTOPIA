@@ -2,6 +2,7 @@ from jsonformer import Jsonformer
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 torch.cuda.empty_cache()
+
 # Step 5: Define JSON schema
 json_schema_movie_scene = {
     "type": "object",
@@ -100,7 +101,7 @@ def llama_3_scenario_prompt_creation(movie_scene, interaction_type):
 
     ### Goal: ###
     When the user requests you to generate a scenario based on the movie scene and human interaction type he gives you, generate a human interaction scenario based on the given movie scene and given interaction type
-    and use general terms like "agents" instead of specific character names to ensure broader applicability.
+    and use general terms like "agents" instead of specific names to ensure broader applicability.
     Include the following details in your scenario description:
     - Title: give a title to the generated scenario.
     - description: A vivid description of the scenario.
@@ -148,9 +149,9 @@ def extract_movie_scene(interaction_type, model, tokenizer, json_schema, max_len
 
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # print(device)
-model_name = "meta-llama/Meta-Llama-3-8B-Instruct"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
+# model_name = "meta-llama/Meta-Llama-3-8B-Instruct"
+# tokenizer = AutoTokenizer.from_pretrained(model_name)
+# model = AutoModelForCausalLM.from_pretrained(model_name)
 
 # movie_scene_text = extract_movie_scene("conflict", model, tokenizer, json_schema_movie_scene)
 # print(movie_scene_text)
@@ -158,5 +159,6 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 # # Step 6: Generate JSON data for each part
 # movie_scene_text = extract_movie_scene(prompt, model, tokenizer, json_schema_movie_scene, 2000) # TODO experiment with a good number of max tokens
 # scenario_text = generate_scenario(prompt_scenario, model, tokenizer)
+
 
 
