@@ -31,7 +31,7 @@ json_schema_agents = {
             "public_info" : {"type" : "string"},
             "big_five" : {"type" : "string"},
             "moral_values"  : {"type" : "string"},
-            "schwartz_personal_values": {"type" : "array", "items" : {"type": "string"}}
+            "schwartz_personal_values": {"type" : "array", "items" : {"type": "string"}},
             "decision_making_style": {"type" : "string"},
             "secret": {"type" : "string"},
             "social_goal" : {"type" : "string"}
