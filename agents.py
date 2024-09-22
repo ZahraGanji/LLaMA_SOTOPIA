@@ -40,6 +40,7 @@ json_schema_agents = {
     },
     "required": ["description", "goal", "constraints", "interaction"]
 }
+
 def llama_3_extract_agents(movie_scene):
     print("Extracting agents")
     json_format = {
@@ -111,5 +112,133 @@ def extract_movie_scene(movie_scene: dict, model, tokenizer, json_schema, max_le
                         max_string_token_length=max_length)
     extracted_data = jsonformer()
     return extracted_data
-    
+
+def init_instruction(scenario, movie_character, movie_info, start=True):
+
+        json_format = {
+        "init_msg" : "set to true if it is an initial message. set to false, when the agent is supposed to start a conversation",
+        "utterance" : "Message conveyed by the agent. If it is an initial message, then it is empty"
+    }
+
+    if start:
+        init_msg = "Please start the conversation"
+    else:
+        init_msg = "You do NOT start the conversation. You will wait for the first message from another agent"
+
+    system_message = f"""
+    #### Persona: ###
+    You will engage in conversation which unfolds in the given scenario. The main idea is that, while playing the scenario out, you will act like 
+    a given movie character from a given movie. You will know all the details about your assigned movie character including: motivations, 
+    personality traits, personal values, morality type etc. 
+    ### Goal: ###
+    Successfully conduct a conversation reaching your goal.
+    """
+
+    # TODO make a good prompt here 
+    user_message = f""" 
+    ### Question: ###
+    You will act like movie character {movie_character} from the {movie_info["movie_name"]} movie. Your goal is to achieve {movie_info["goal"]} 
+    in the following scenario: {scenario}. You will now engage in conversation with another agent. {init_msg}
+
+
+    ### Format: ###
+    Use the following json format:
+    {json_format}
+    """
+    messages = [
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_message},
+        ]
+    return messages
+
+def return_utterance(previous_utterance):
+
+    json_format = {
+        "previous_utterance" : "set to true if it is an initial message. set to false, when the agent is supposed to start a conversation",
+        "utterance" : "Message conveyed by the agent. If it is an initial message, then it is empty"
+    }
+
+    # TODO make a good prompt here 
+    user_message = f""" 
+    ### Question: ###
+    Following the previous conversation and previous utterance from your conversation partner: {previous_utterance}.
+    Respond accordingly.
+
+
+    ### Format: ###
+    Use the following json format:
+    {json_format}
+    """
+    messages = [
+            {"role": "assistant", "content": user_message},
+        ]
+    return messages
+
+def run_turn(previous_utterance):
+    json_schema = {
+    "type": "object",
+    "properties": {
+        "previous_utterance" : {"type" : "string"}
+        "utterance" : {"type" : "string"}
+    }
+    }
+    messages = return_utterance(previous_utterance)
+    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, return_tensors="pt")
+    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt,max_number_tokens=max_length,
+                        max_array_length=max_length,
+                        max_string_token_length=max_length)
+    extracted_data = jsonformer()
+
+def init_conversation(scenario, movie_character, movie_info, start):
+    json_schema = {
+    "type": "object",
+    "properties": {
+        "init_msg" : {"type" : "boolean"}
+        "utterance" : {"type" : "string"}
+    }
+    }
+    messages = init_instruction(scenario, movie_character, movie_info, start=True)
+    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, return_tensors="pt")
+    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt,max_number_tokens=max_length,
+                        max_array_length=max_length,
+                        max_string_token_length=max_length)
+    extracted_data = jsonformer()
+    return extracted_data
+
+class Conversation:
+    def __init__(self, scenario, characters, movie_info, MODEL_NAME):
+        self.model_name = MODEL_NAME
+        self.agent_1_name, self.agent_2_name = characters # assume 2 characters
+        self.agent_1 = self._init_model()
+        self.agent_2 = self._init_model()
+        self.tokenizer = tokenizer
+        self.scenario = scenario
+        self.episode = []
+
+    def _init_agents(self):
+        _ = init_conversation(scenario, self.agent_2, movie_info, start=False)
+        first_utterance["utterance"] = init_conversation(scenario, self.agent_1, movie_info, start=True)
+        self.episode.append(first_utterance)
+    def _init_model(self):
+        model = AutoModelForCausalLM.from_pretrained(self.model_name, device_map = 'auto')
+        model.config.use_cache = False
+        model.config.pretraining_tp = 1
+        return model
+    def run_conversation(self):
+        while len(episode) < 20:
+            if len(episode) == 1:
+                agent_2_utter = run_turn(self.episode[-1])
+                self.episode.append(agent_2_utter)
+            else:
+                agent_1_utter = run_turn(self.episode[-1])
+                agent_2_utter = run_turn(agent_1_utter)
+                self.episode.append(agent_1_utter)
+                self.episode.append(agent_2_utter)
+    def return_episode(self):
+        return self.episode
+
+
+
+
+
 
