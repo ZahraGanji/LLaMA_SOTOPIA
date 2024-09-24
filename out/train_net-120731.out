@@ -1,0 +1,12 @@
+___loading_config_____
+___defining_model_____
+____extracting_movie_scene_____
+in llama_3_scene_prompt_creation
+Movie scene:
+{'title': 'The Godfather', 'description': "Michael Corleone is forced to take the reins of his family's crime empire after his father's assassination. He struggles with his moral compass and loyalty to his family. Meanwhile, rival mobster Moe Greene tries to take advantage of the power vacuum and make a move on the Corleone empire.", 'characters_involved': ['Michael Corleone', 'Tom Hagen', 'Fredo Corleone'], 'setting': 'The scene takes place in the late 1940s or early 1950s, at the Corleone family compound in Long Beach, New York, and at the meeting between Michael and Moe Greene at the Fontainebleau Hotel in Miami Beach, Florida. The setting is a world of organized crime, corruption, and moral ambiguity.', 'goals_and_motivations': "Michael Corleone wants to keep the family business running smoothly and maintain his position as the head of the family, while avoiding his father's violent and corrupt ways. Moe Greene wants to take over the Corleone empire and expand his own business. Tom Hagen is torn between his loyalty to Michael and his duty to protect the family business.", 'scene_nature': 'The scene is an example of the conflict type of human social interaction, where the opposing interests of Michael and Moe Greene lead to tension and confrontation, challenging their values and loyalties.'}
+____extracting_scenario_____
+in llama_3_scenario_prompt_creation
+Scenario:
+{'title': 'The Struggle for Power', 'description': 'In this tense scenario, two powerful agents, the Corleone family and Moe Greene, are engaged in a conflict over the control of the empire, each having opposing interests and goals.', 'goal': 'The Corleone family aims to protect its power and legacy, while Moe Greene wants to exploit the power vacuum to expand his own empire and increase his influence.', 'interaction': "In this complex web of power struggles, the Corleone family, under the leadership of Michael Corleone, must navigate the treacherous world of organized crime, dealing with internal conflicts and external threats. Moe Greene, sensing the family's vulnerability, begins to make a move, offering a deal to Michael that could bring about significant financial gain but also jeopardize the family's very existence."}
+____evaluation____
+Generated movie scenario exists according to Llama-3. Proceeding to the next step

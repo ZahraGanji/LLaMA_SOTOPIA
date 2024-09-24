@@ -1,0 +1,65 @@
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+2024-09-11 12:45:28.057641: I tensorflow/core/util/util.cc:169] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:11<00:34, 11.44s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:23<00:24, 12.06s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:35<00:12, 12.03s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:37<00:00,  7.98s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:37<00:00,  9.43s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.35s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.35s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.32s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.09s/it]
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+Traceback (most recent call last):
+  File "/home/s33zganj/LLaMA_SOTOPIA/pipeline.py", line 53, in <module>
+    movie_scene = extract_movie_scene(interaction_type, model, tokenizer, json_schema_movie_scene, 500)
+  File "/home/s33zganj/LLaMA_SOTOPIA/llama_generation_json.py", line 145, in extract_movie_scene
+    extracted_data = jsonformer()
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/jsonformer/main.py", line 242, in __call__
+    generated_data = self.generate_object(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/jsonformer/main.py", line 147, in generate_object
+    obj[key] = self.generate_value(schema, obj, key)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/jsonformer/main.py", line 178, in generate_value
+    return self.generate_array(schema["items"], new_array)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/jsonformer/main.py", line 199, in generate_array
+    output = self.model.forward(input_tensor.to(self.model.device))
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 1189, in forward
+    outputs = self.model(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 1001, in forward
+    layer_outputs = decoder_layer(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 734, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 424, in forward
+    attn_weights = torch.matmul(query_states, key_states.transpose(2, 3)) / math.sqrt(self.head_dim)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 58.00 MiB (GPU 0; 44.40 GiB total capacity; 42.74 GiB already allocated; 19.25 MiB free; 43.22 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 87016) of binary: /home/s33zganj/pytorch/bin/python
+Traceback (most recent call last):
+  File "/home/s33zganj/pytorch/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/s33zganj/LLaMA_SOTOPIA/pipeline.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-09-11_12:47:34
+  host      : node-04.bender
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 87016)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: node-04: task 0: Exited with exit code 1

@@ -1,0 +1,12 @@
+___loading_config_____
+___defining_model_____
+____extracting_movie_scene_____
+in llama_3_scene_prompt_creation
+Movie scene:
+{'title': 'The Grand Budapest Hotel', 'description': 'In a bustling marketplace in the fictional Republic of Zubrowka, Gustave H, a charming concierge at the Grand Budapest Hotel, exchanges a conversation with a young lobby boy, Zero Moustafa. Gustave, known for his exceptional charm, flirts with the guests, including the wealthy Madame Celine, who becomes his patroness. Zero looks up to Gustave as a mentor, seeking advice and guidance.', 'characters_involved': ['Gustave H'], 'setting': 'Marketplace in the fictional Republic of Zubrowka, late 1930s. The scene takes place in a vibrant and colorful setting, with vendors and customers bustling around.', 'goals_and_motivations': 'Gustave aims to charm Madame Celine and secure a legacy at the hotel. Zero seeks guidance and mentorship from Gustave, desiring to learn the art of hospitality and the importance of relationships.', 'scene_nature': 'Exchange'}
+____extracting_scenario_____
+in llama_3_scenario_prompt_creation
+Scenario:
+{'title': 'A Conversation in the City Square', 'description': 'In this scenario, two agents, an experienced artist and a young apprentice, engage in an exchange-type interaction at a city square. The artist, known for their exceptional talent, shares their knowledge and skills with the apprentice, who is eager to learn and gain recognition.', 'goal': "The artist seeks to pass on their expertise to the apprentice, while the apprentice aims to learn new techniques and gain the artist's approval.", 'interaction': "The artist begins by offering words of encouragement to the apprentice, praising their work and offering constructive feedback. The apprentice listens intently, taking mental notes and asking follow-up questions. The artist, pleased with the apprentice's enthusiasm, shares more of their expertise, demonstrating techniques and offering guidance. The apprentice is attentive, taking careful notes and asking for clarification on specific points. The interaction is characterized by mutual respect, admiration, and a sense of mentorship, as the artist and apprentice work together to create something new and innovative."}
+____evaluation____
+Generated movie scenario exists according to Llama-3. Proceeding to the next step

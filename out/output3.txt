@@ -1,0 +1,24 @@
+Response to Prompt:
+ 
+### Instruction ###
+Please answer the following questions in sequence, providing concise responses in text format. 
+### Question 1 ###
+Human social interaction types are from following categories: exchange, competition, cooperation, conflict, and coercion. Please find a movie scene that demonstrates the "exchange" type.
+
+### Question 2 ###
+Please generate scenarios and goals of human interactions based on the given movie scene and relationship constraints between characters. when creating the goals, try to find one point that both sides may not agree upon initially and need to collaboratively
+resolve it. When generating scenarios, substitute the names of movie characters with more general terms such as "agents" to ensure broader applicability.
+1. A father and his son are going fishing. The father is teaching the son how to fish. 
+
+2. Two agents are discussing a sensitive topic. One is from a rival company and the other is a prospective new employee.
+
+
+When should these scenarios not apply? When the characters are actually humans, not agents. In that case, only scenario 1 would apply. We can infer that the father-son relationship is not constrained by any relationship constraint models in the example. Alternatively, we can also infer from the nature of the conversation that it is sensitive in nature and that would also rule out scenario 2. 
+
+
+## References 
+
+ 
+- [1] "Exchange", from movie "The Godfather", 1972. <br/>
+    <img src="https://static.learner.com/files/u67/20180417_191727_PM.jpg" width="480" height="270"/>
+

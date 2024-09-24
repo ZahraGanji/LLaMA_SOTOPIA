@@ -1,0 +1,69 @@
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) Python/3.12.3-GCCcore-13.3.0
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) CUDA/12.4.0
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+Loading checkpoint shards:   0%|          | 0/30 [00:00<?, ?it/s]Loading checkpoint shards:   3%|▎         | 1/30 [00:00<00:24,  1.17it/s]Loading checkpoint shards:   7%|▋         | 2/30 [00:01<00:27,  1.04it/s]Loading checkpoint shards:  10%|█         | 3/30 [00:03<00:29,  1.11s/it]Loading checkpoint shards:  13%|█▎        | 4/30 [00:04<00:29,  1.12s/it]Loading checkpoint shards:  17%|█▋        | 5/30 [00:05<00:27,  1.09s/it]Loading checkpoint shards:  20%|██        | 6/30 [00:06<00:25,  1.07s/it]Loading checkpoint shards:  23%|██▎       | 7/30 [00:07<00:24,  1.08s/it]Loading checkpoint shards:  27%|██▋       | 8/30 [00:08<00:24,  1.10s/it]Loading checkpoint shards:  30%|███       | 9/30 [00:09<00:23,  1.13s/it]Loading checkpoint shards:  33%|███▎      | 10/30 [00:10<00:22,  1.11s/it]Loading checkpoint shards:  37%|███▋      | 11/30 [00:11<00:20,  1.10s/it]Loading checkpoint shards:  40%|████      | 12/30 [00:12<00:19,  1.08s/it]Loading checkpoint shards:  43%|████▎     | 13/30 [00:14<00:18,  1.09s/it]Loading checkpoint shards:  47%|████▋     | 14/30 [00:15<00:17,  1.11s/it]Loading checkpoint shards:  50%|█████     | 15/30 [00:16<00:16,  1.10s/it]Loading checkpoint shards:  53%|█████▎    | 16/30 [00:17<00:15,  1.09s/it]Loading checkpoint shards:  57%|█████▋    | 17/30 [00:18<00:14,  1.10s/it]Loading checkpoint shards:  60%|██████    | 18/30 [00:19<00:13,  1.14s/it]Loading checkpoint shards:  63%|██████▎   | 19/30 [00:20<00:12,  1.15s/it]Loading checkpoint shards:  67%|██████▋   | 20/30 [00:22<00:11,  1.14s/it]Loading checkpoint shards:  70%|███████   | 21/30 [00:23<00:11,  1.26s/it]Loading checkpoint shards:  73%|███████▎  | 22/30 [00:25<00:10,  1.32s/it]Loading checkpoint shards:  77%|███████▋  | 23/30 [00:26<00:09,  1.39s/it]Loading checkpoint shards:  80%|████████  | 24/30 [00:28<00:08,  1.40s/it]Loading checkpoint shards:  83%|████████▎ | 25/30 [00:29<00:06,  1.37s/it]Loading checkpoint shards:  87%|████████▋ | 26/30 [00:30<00:05,  1.37s/it]Loading checkpoint shards:  90%|█████████ | 27/30 [00:32<00:04,  1.37s/it]Loading checkpoint shards:  93%|█████████▎| 28/30 [00:33<00:02,  1.40s/it]Loading checkpoint shards:  97%|█████████▋| 29/30 [00:34<00:01,  1.39s/it]Loading checkpoint shards: 100%|██████████| 30/30 [00:35<00:00,  1.15s/it]Loading checkpoint shards: 100%|██████████| 30/30 [00:35<00:00,  1.18s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.43s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.45s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.01it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.15s/it]
+/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Downloading shards:   0%|          | 0/4 [00:00<?, ?it/s]Downloading shards:   0%|          | 0/4 [01:13<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/s33zganj/LLaMA_SOTOPIA/pipeline.py", line 76, in <module>
+    judge_model = AutoModelForCausalLM.from_pretrained(judge_model_name)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3693, in from_pretrained
+    resolved_archive_file, sharded_metadata = get_checkpoint_shard_files(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 1079, in get_checkpoint_shard_files
+    cached_filename = cached_file(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 402, in cached_file
+    resolved_file = hf_hub_download(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_deprecation.py", line 101, in inner_f
+    return f(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1240, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1389, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1903, in _download_to_tmp_and_move
+    with incomplete_path.open("ab") as f:
+OSError: [Errno 122] Disk quota exceeded
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 2406677) of binary: /home/s33zganj/pytorch/bin/python
+Traceback (most recent call last):
+  File "/home/s33zganj/pytorch/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/home/s33zganj/LLaMA_SOTOPIA/pipeline.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-09-16_21:16:15
+  host      : node-05.bender
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 2406677)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+srun: error: node-05: task 0: Exited with exit code 1

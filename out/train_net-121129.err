@@ -1,0 +1,56 @@
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) Python/3.12.3-GCCcore-13.3.0
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) CUDA/12.4.0
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+Downloading shards:   0%|          | 0/30 [00:00<?, ?it/s]Downloading shards:  57%|█████▋    | 17/30 [00:00<00:00, 94.99it/s]Downloading shards:  57%|█████▋    | 17/30 [00:20<00:00, 94.99it/s]Downloading shards:  60%|██████    | 18/30 [01:42<01:35,  7.97s/it]Downloading shards:  63%|██████▎   | 19/30 [03:24<03:10, 17.34s/it]Downloading shards:  67%|██████▋   | 20/30 [12:34<13:56, 83.68s/it]Downloading shards:  70%|███████   | 21/30 [14:14<12:55, 86.21s/it]Downloading shards:  70%|███████   | 21/30 [15:31<06:39, 44.38s/it]
+Traceback (most recent call last):
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1915, in _download_to_tmp_and_move
+    http_get(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 552, in http_get
+    temp_file.write(chunk)
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/s33zganj/LLaMA_SOTOPIA/pipeline.py", line 66, in <module>
+    model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, device_map="auto")
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3693, in from_pretrained
+    resolved_archive_file, sharded_metadata = get_checkpoint_shard_files(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 1079, in get_checkpoint_shard_files
+    cached_filename = cached_file(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 402, in cached_file
+    resolved_file = hf_hub_download(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_deprecation.py", line 101, in inner_f
+    return f(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1240, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1389, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1903, in _download_to_tmp_and_move
+    with incomplete_path.open("ab") as f:
+OSError: [Errno 122] Disk quota exceeded
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 1033490) of binary: /home/s33zganj/pytorch/bin/python
+Traceback (most recent call last):
+  File "/home/s33zganj/pytorch/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distribu
