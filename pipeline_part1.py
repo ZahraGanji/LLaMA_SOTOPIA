@@ -15,9 +15,11 @@ from concurrent.futures import ThreadPoolExecutor
 torch.cuda.empty_cache()
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
 print("___loading_config_____")
-
+print("___defining_model_____")
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 # Configurations
-MODEL_NAME = "meta-llama/Meta-Llama-3-8B-Instruct"
+MODEL_NAME = "meta-llama/Meta-Llama-3-70B"
 # MODEL_NAME = "meta-llama/Llama-2-70b-chat-hf"
 Model_judge = ["meta-llama/Meta-Llama-3.1-8B-Instruct", "databricks/dolly-v2-12b", "databricks/dolly-v2-3b"]
 interaction_types = ["exchange", "competition", "cooperation", "conflict", "coercion"]
@@ -46,9 +48,10 @@ json_schema_scenario = {
         "description": {"type": "string"},
         "goals1": {"type": "string"},
         "goals2": {"type": "string"},
-        "interaction": {"type": "string"},
+        "relationship": {"type": "string"},
+        "interaction": {"type": "string"}
     },
-    "required": ["title", "description", "goal1","goal2", "interaction"]
+    "required": ["title", "description", "goal1","goal2","relationship", "interaction"]
 }
 
 
@@ -65,16 +68,17 @@ print("___defining_model_____")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 
-# If you want to load the model explicity
-quant_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_use_double_quant=False,
-        bnb_4bit_compute_dtype=torch.float16
-    )
+# # If you want to load the model explicity
+# quant_config = BitsAndBytesConfig(
+#         load_in_4bit=True,
+#         bnb_4bit_quant_type="nf4",
+#         bnb_4bit_use_double_quant=False,
+#         bnb_4bit_compute_dtype=torch.float16
+#     )
 
 # Define the main model and tokenizer
-model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, torch_dtype=torch.float16, device_map="auto", quantization_config=quant_config)
+# model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, torch_dtype=torch.float16, device_map="auto", quantization_config=quant_config)
+model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, torch_dtype=torch.float16, device_map="auto")
 
 model.config.use_cache = False
 model.config.pretraining_tp = 1
@@ -148,6 +152,6 @@ with ThreadPoolExecutor(max_workers=len(interaction_types)) as executor:
 df = pd.json_normalize(all_scenes_scenarios)
 
 # Save the DataFrame to a CSV file
-df.to_csv("./pipeline_total.csv", index=False)
+df.to_csv("./pipeline.csv", index=False)
 
 print("Finished generating scenes and scenarios.")
