@@ -10,49 +10,68 @@ def llama_3_scene_prompt_creation(interaction_type):
     print("in llama_3_scene_prompt_creation")
     json_format = {
         "name": "Name of the movie",
-        "description": "A detailed description of the movie scene and interactions between two characters or agents based on the given interact type and why this scene is chosen for the given interaction type.",
-        "character1": "the first main characters involved in the movie scene.",
-        "character2": "the second main characters involved in the movie scene.",
+        "description": "A comprehensive explanation of the movie scene and how this scene exemplifies the social interaction type, highlighting the actions, dialogue, emotions, and character dynamics.",
+        "character1": "Identify the name of the first main characters involved in the movie scene.",
+        "character2": "Identify the name of the second main characters involved in the movie scene.",
         "setting": "Time and place where the scene occurs, including the physical environment and cultural context. This helps establish the mood and tone, influencing the story and characters.",
-        "goals1": "The goals and motivations of character1 involved in the scene",
-        "goals2": "The goals and motivations of character2 involved in the scene"
+        "relationship": "Define the relationship between character1 and character2 in the movie scene using one of the following: 'family', 'friend', 'romantic', 'acquaintance', or 'stranger'.",
+        "scenario": "Based on the movie scene, generate a scenario of two characters interacting based on the given interaction type",
+        "goal1": "Describe the primary social goal of the character1 involved in the scene and scenario.",
+        "goal2": "Describe the primary social goal of the character2 involved in the scene and scenario."
     }
 
 
     system_message = f"""
         #### Persona: ###
-        You are a movie expert with a deep and detailed knowledge of countless movie scenes. You excel at identifying how human social interactions play out on screen, categorizing them into five key types:
-        - **Exchange**: A mutually beneficial trade of goods, services, or favors between parties.
-        - **Competition**: A scenario where individuals or groups struggle against each other to gain resources, status, or success.
-        - **Cooperation**: Parties work together to achieve a shared goal, combining efforts and distributing rewards.
-        - **Conflict**: A clash of opposing interests or motivations, leading to disagreement or confrontation.
-        - **Coercion**: One party pressures or manipulates another to achieve a goal, often through power or threats.
+        You are a film expert with a remarkable memory for movie scenes and a profound understanding of human social dynamics. 
+        You categorize interactions into five types: exchange, competition, cooperation, conflict, and coercion.
+        Here are brief explanations for each category:
+        - Exchange: A social interaction where both parties benefit by trading goods, services, or favors.
+        - Competition: Two parties strive against each other for resources, status, or success.
+        - Cooperation: Parties work together toward a common goal, combining efforts for shared success.
+        - Conflict: A clash of interests leads to disagreement or confrontation.
+        - Coercion: One party forces or manipulates another into a course of action or agreement, often using power or threats.
 
         ### Goal: ###
-        When the user asks for a movie scene that represents one of these human interaction types, please provide a vivid and detailed description of a relevant scene from a movie where two human characters interact with each other based on the given interaction type.
-        Your answer should include:
-        1. **Name the movie**.
-        2. **Describe the movie scene**: Focus on how it demonstrates the selected social interaction type. Highlight the actions, dialogue, emotions, and dynamics between the characters.
-        3. **Identify the main characters** involved in the scene and how their respective roles affect the interaction.
-        4. **Describe the setting**: Include the time, place, and cultural context. Describe how the physical and emotional environment impacts the tone and atmosphere of the scene.
-        5. **Explain the goals and motivations of the two main characters** in the scene. Clarify how each character’s goals drive their behavior and influence the interaction.
+        When the user gives you an interaction type and asks for a movie scene that represents this human interaction types, please extract a **real, existing and well known movie scene** where two human characters interact with each other based on the given interaction type.
+        The movie scene should correctly demonstrates the given human interaction type which is {interaction_type} in the interaction between charcters.
+        Your response must include:
+        1. name: name of the movie.
+        2. description: A comprehensive explanation of the movie scene and how this scene exemplifies the social interaction type, highlighting the actions, dialogue, emotions, and character dynamics.
+        3. character1: Identify the name of the first main character involved in the scene and interactio.
+        4. character2: Identify the name of the second main character involved in the scene and interactio.
+        5. setting: Determine the time and place where the scene occurs, including the physical environment and cultural context. This helps establish the mood and tone, influencing the story and characters.
+        6. relationship: Define the relationship between character1 and character2 in the movie scene using one of the following: 'family', 'friend', 'romantic', 'acquaintance', or 'stranger'.
+        7. scenario: Based on the movie scene, generate a scenario of two characters interacting based on the given interaction type.
+        8. goal1: Describe the primary social goal of the character1 involved in the scene and scenario.
+        9. goal2: Describe the primary social goal of the character2 involved in the scene and scenario.
+        All descriptions should be clear, concrete, and relevant to the interaction type.
+        An example of a scenario: 'Two friends deciding on a movie to watch on Netflix.'
+        relationships have the following implications: scenarios often impose relationship constraints; for example, a family relationship is necessary for a family dinner scene, but not for a scenario about finding mutual friends at a party. Additionally, different relationships influence an agent’s understanding of other agents’ profiles during interactions. For instance, a stranger may lack knowledge of another agent’s occupation, while a romantic partner may be familiar with the other’s personality. In family, friends, or romantic relationships, agents can view all profile information, except for secrets. Two acquaintances can see names, occupations, gender pronouns, and public information, whereas strangers have no visibility into each other's profiles.
+        consider scenarios where agents have both shared and private information regarding the social task. Shared information encompasses the scenario's context, including location, time, and other relevant details, while private information consists of social goals known only to each agent.
 
-        The answer should reflect how these elements work together to portray the specific human interaction type (e.g., exchange, competition, etc.).
-    """
+
+     """
     user_message = f"""
         ### Question: ###
-        Please select a scene from a real and existing movie or film  that demonstrates the **{interaction_type}** type of human social interaction between two characters. 
-
-        Your response should include:
-        1. A detailed explanation of how the chosen movie scene reflects the specific human social interaction type (e.g., competition, conflict, etc.).
-        2. Descriptions of the two main characters involved, including their names, roles in the story, and how their motivations shape the interaction.
-        3. A vivid description of the setting—time, place, and atmosphere—and how it influences the interaction between the characters.
-        4. An explanation of each character's goals and motivations within the scene and how these goals drive the interaction.
-
+        Please select a scene from a real, existing and well known **movie** that demonstrates the **{interaction_type}** type of human social interaction between two characters. 
+        
+        Your response must include:
+        1. Name: Movie name.
+        2. description: A comprehensive explanation of  how this scene exemplifies this interaction type:{interaction_type} , highlighting the actions, dialogue, emotions, and character dynamics.
+        3. Character1: Identify the name of the first main character involved in the scene and interactio.
+        4. Character2: Identify the name of the second main character involved in the scene and interactio.
+        5. Setting: Determine the time and place where the scene occurs, including the physical environment and cultural context. This helps establish the mood and tone, influencing the story and characters."
+        6. relationship: Define the relationship between character1 and character2 in the movie scene using one of the following: 'family', 'friend', 'romantic', 'acquaintance', or 'stranger'.
+        7. scenario: Based on the movie scene, generate a scenario of two characters interacting based on the given interaction type.
+        8. goal1: Describe the primary social goal of the character1 involved in the scene and scenario.
+        9. goal2: Describe the primary social goal of the character2 involved in the scene and scenario.
+        The interaction between Character1 and Character2 in the scene should demonstrates this human interaction type: {interaction_type}.         
         ### Format: ###
         Please use the following JSON format:
 
         {json_format}
+
     """
     messages = [
             {"role": "system", "content": system_message},
@@ -61,17 +80,13 @@ def llama_3_scene_prompt_creation(interaction_type):
 
     return(messages)
 
-def llama_3_scenario_prompt_creation(movie_scene, movie_name, interaction_type, character1,character2, goals1, goals2, setting):
+def llama_3_scenario_prompt_creation(movie_scene, movie_name, interaction_type, setting, relationship):
     print("in llama_3_scenario_prompt_creation")
 
     json_format = {
-        "title": "A descriptive title that captures the essence of the scenario.",
-        "description": "A vivid and detailed description of the scenario in which two agents interact with each other. Focus on the social dynamics, emotions, and dialogue. Highlight how the scene progresses emotionally and socially, and make sure to include non-verbal cues such as body language and facial expressions.",
-        "setting": "The time, place, and context of the scenario, including relevant background information (e.g., 'Set in a busy marketplace at noon'). Add sensory details to immerse the reader (e.g., sounds, atmosphere).",
-        "goal1": "The primary social goal of the first agent. This should be complex and reflect their deeper motivations. Identify a specific point where their goals clash with the second agent’s goals, and describe how this clash affects their behavior and communication.",
-        "goal2": "The primary social goal of the second agent. This should reflect their deeper motivations and introduce some tension or disagreement with the first agent’s goals. Highlight how their goals and perspective may evolve as the scenario progresses.",
-        "relationship":"One word that defines the relationship between the two agents: 'family', 'friend', 'romantic', 'acquaintance', or 'stranger'.",
-        "interaction": "A detailed description of how the two agents interact. Focus on the back-and-forth dialogue, the emotional evolution of the conversation, and how they handle their conflicting goals. Incorporate body language, internal thoughts, and subtle power dynamics. Make sure the dialogue and non-verbal cues feel natural and reflect their relationship."
+        "scenario": "scenario as a social context where two characters interact.",
+        "goals1": "Describe the primary social goal of the first agent involved in the scenario.",
+        "goals2": "Describe the primary social goal of the second agent involved in the scenario.",
     }
 
 
@@ -80,43 +95,39 @@ def llama_3_scenario_prompt_creation(movie_scene, movie_name, interaction_type, 
     You are a film expert with a remarkable memory for movie scenes and a profound understanding of human social dynamics. You categorize interactions into five types: exchange, competition, cooperation, conflict, and coercion.
 
     Here are brief explanations for each category:
-    - Exchange: A social interaction where both parties benefit by trading goods, services, or favors.
-    - Competition: Two parties strive against each other for resources, status, or success.
-    - Cooperation: Parties work together toward a common goal, combining efforts for shared success.
-    - Conflict: A clash of interests leads to disagreement or confrontation.
-    - Coercion: One party forces or manipulates another into a course of action or agreement, often using power or threats.
+    - Exchange: A social interaction where both parties benefit by "trading" goods, services, or favors.
+    - Competition: Two parties "strive" against each other for resources, status, or success.
+    - Cooperation: Parties "work together" toward a common goal, combining efforts for shared success.
+    - Conflict: A clash of interests leads to "disagreement" or "confrontation".
+    - Coercion: One party "forces or manipulates" another into a course of action or agreement, often using power or threats.
 
     ### Goal: ###
-    Your task is to create a **vivid and realistic scenario** where two human agents interact based on the given movie scene and the given intraction type. The scenario should focus on the **emotional stakes**, social goals, and motivations of both agents. Highlight their personalities and how they shape the interaction, especially in moments of tension, conflict, or negotiation. 
-    When creating the goals, try to find one point that both sides may not agree upon initially and need to collaboratively resolve it
-    Use "Agent A" and "Agent B" instead of character names.
-    one example of a scenario description is: "In this scenario, two individuals—Agent 1, an ambitious intern, and Agent 2, a senior executive at a prestigious financial firm—meet to discuss the potential of a full-time role. Agent 1, driven by personal circumstances and a desire for stability, offers to work harder and learn faster than anyone else, despite the position being unpaid. Agent 2, recognizing the intern’s determination, evaluates the situation through the lens of the company’s benefit. The exchange is rooted in the value of time, effort, and experience, with each agent trying to strike a balance between personal ambition and professional demands."
+
+    Your task is to generate a scenario, in which "two" characters, with the given relationship, interact with each other.
+    the scenario should be based on the given movie scene and the interaction between characters should be based on the given intraction type.
+    Then you should generate agents' social goals based on the given movie scene, relationship, setting and the given interaction type.
+    
+    An example of a scenario: 'Two friends deciding on a movie to watch on Netflix.' 
+    The response should demonstrate two charcters interacting.
+    The generated scenario should be aligned relationship constraints of the given relationship; for example, a family relationship is required for a family dinner scenario,but not for a scenario involving finding mutual friends at a party.
     
     The scenario should include the following elements:
-    - **Title**: A title that encapsulates the theme or conflict in the scenario.
-    - **Description**: A detailed narrative that captures the atmosphere, mood, and conversation between the agents. Use **sensory details** (sights, sounds, and emotions) and focus on the subtle shifts in the interaction.
-    - **Setting**: Specify the time, place, and broader context of the scenario. Use vivid sensory details to create a rich background.
-    - **Goal 1**: Describe the primary social goal of Agent A, highlighting its complexity and how it influences their actions. Make sure their goal includes a point of **disagreement** with Agent B’s goal.
-    - **Goal 2**: Describe the primary social goal of Agent B, ensuring that their motivations are distinct and that they come into **tension** with Agent A’s goal.
-    - **Relationship**: Define the relationship between Agent A and Agent B using one of the following: 'family', 'friend', 'romantic', 'acquaintance', or 'stranger'.
-    - **Interaction**: Provide a rich description of the interaction between the agents, showing how the conversation develops. Include **verbal and non-verbal cues** (e.g., gestures, facial expressions, and body language). Describe how the agents’ goals clash, evolve, and influence the dialogue.
-
-    Make the interaction realistic by focusing on the **subtle changes** in tone, body language, and emotional undercurrents. Ensure the scenario shows how humans navigate complex social dynamics, with dialogue that feels natural and organic.
+    - **scenario**: scenario as a social context where two characters interact based on the given interaction type, setting, relationship and movie scene. Th scenario must have two characters not one and do not use "you" in it.
+    - **goals1**: Describe the primary social goal of the first agent involved in the scenario.
+    - **goals2**: Describe the primary social goal of the second agent involved in the scenario.
     """
 
 
     user_message = f"""
     ### Question: ###
-    Based on the movie scene {movie_scene} from {movie_name}, which showcases a {interaction_type} type of human interaction, featuring the characters {character1} and {character2}, with their respective goals and motivations {goals1}, {goals2}, and taking place in the setting {setting}, please generate a **detailed and vivid scenario** of an interaction between two agents.
-
+    Based on the movie scene: {movie_scene} from this movie:{movie_name}, which showcases the {interaction_type} type of human interaction, taking place in this setting: {setting}, please generate a scenario of two characters with this relationship:{relationship} interact and their social goals.
+    when creating the goals, try to find one point that both sides may not agree upon initially and need to collaboratively resolve it using interaction of type {interaction_type}
+    scenario and goals should reflect {movie_scene},{setting},{relationship} and {interaction_type} between two agents.
     The scenario should include:
-    - A descriptive title,
-    - A rich description of the scenario and setting, including sensory details (sights, sounds, and mood),
-    - Clearly defined social goals for each agent, highlighting where their goals may clash or require compromise,
-    - A single word that defines the relationship between the two agents involved in the scenario. The relationship should be one of the following: 'family', 'friend', 'romantic', 'acquaintance', or 'stranger',
-    - A detailed interaction that illustrates how the agents’ goals influence the conversation, conflict, or resolution based on their relationship.
+    - **scenario**: scenario as a social context where two characters interact based on the given interaction type, setting, relationship and movie scene. Th scenario must have two characters not one and don not use "you" in it.
+    - **goals1**: Describe the primary social goal of the first agent involved in the scenario.
+    - **goals2**: Describe the primary social goal of the second agent involved in the scenario.
 
-    Ensure that the interaction evolves naturally, includes non-verbal cues such as body language, and reflects the emotional stakes involved.
 
     ### Format: ###
     Please use the following JSON format:
@@ -131,7 +142,7 @@ def llama_3_scenario_prompt_creation(movie_scene, movie_name, interaction_type, 
 
     return(messages)
 
-def llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario_name,scenario, setting, interaction, agent1, agent2, goals1,goals2, relationship):
+def llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario, agent1, agent2, goals1,goals2, relationship):
     print("in llama_3_episode_prompt_creation")
     json_format = {
            "social_interaction": "A single string of the conversation between the two characters with alternating dialogue in the format: 'Character Name said: Dialogue'"
@@ -152,7 +163,7 @@ def llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario_nam
 
     ### Goal: ###
 
-    When a user introduces two characters from a movie, your task is to simulate their conversation, generating dialogue and actions **from the perspective of the characters themselves**.
+    When a user introduces two characters from a movie, your task is to simulate their conversation based on the given interaction type, generating dialogue and actions **from the perspective of the characters themselves**.
 
     All actions and speech should be presented **as if directly spoken or acted by the characters**—not as a third-party narrator describing their actions. Every action or speech should be in the format:
 
@@ -163,7 +174,7 @@ def llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario_nam
     **Leo Williams said: "Hey Hendrick, it's always nice to see you. I noticed some smoke coming from your yard."**
     **Hendrick Heinz said: "Oh, don't worry, it's just some old papers."**
 
-    The interaction between the characters should be roleplayed based on their unique traits (drawing from your expert knowledge of the given characters in the movie), as well as the given scenario context, setting, interaction type, relationship between the characters, and their respective social goals. Each character should take turns speaking or acting, and can:
+    The interaction between the characters should be roleplayed based on their unique traits (drawing from your expert knowledge of the given characters in the movie), as well as the given scenario context, interaction type, relationship between the characters, and their respective social goals. Each character should take turns speaking or acting, and can:
     - Speak (direct dialogue),
     - Use non-verbal communication (e.g., smiling, hugging),
     - Take a physical action (e.g., playing music).
@@ -178,6 +189,10 @@ def llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario_nam
     **Character Name said: "Dialogue or action description."**
 
     The episode must conclude when the interaction naturally ends (e.g., one character leaves) or after 20 turns.
+   
+    Consider different relationships influence an agent’s observation of the profiles of other agents during interactions; for example, a stranger may not have knowledge about another agent’s occupation, while a romantic partner may know the other agent’s personality.
+
+    interaction should be based on interaction type and goals of characters.
     """
 
   
@@ -186,7 +201,7 @@ def llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario_nam
     ### Question: ###
     Character 1: {agent1} from {movie1} 
     Character 2: {agent2} from {movie2} 
-    Scenario: {scenario_name}:{scenario} set in {setting}, showcasing the interaction: {interaction} between the characters, which exemplifies the {interaction_type} type of human interaction.
+    Scenario: {scenario} between the characters, which exemplifies the {interaction_type} type of human interaction.
     Relationship:{relationship}
     character1's objectives in the scenario:{goals1}
     character2's objectives in the scenario:{goals2}
@@ -404,25 +419,24 @@ chat_template = """### System:
 ### User:
 {user_message}
 """
-# chat_template=chat_template,  in apply
-def generate_scenario(movie_scene,movie_name, interaction_type, character1,character2, goals1, goals2, setting, model, tokenizer, json_schema, max_length):
-    messages = llama_3_scenario_prompt_creation(movie_scene,movie_name, interaction_type, character1,character2, goals1, goals2, setting)
-    prompt = tokenizer.apply_chat_template(messages, chat_template=chat_template, tokenize=False, add_generation_prompt=True, return_tensors="pt")
-    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt, max_string_token_length=1000)
-    extracted_data = jsonformer()
-    return extracted_data
-
 
 def extract_movie_scene(interaction_type, model, tokenizer, json_schema, max_length=500):
     messages = llama_3_scene_prompt_creation(interaction_type)
     # print(messages)
     prompt = tokenizer.apply_chat_template(messages, chat_template=chat_template, tokenize=False, add_generation_prompt=True, return_tensors="pt")
+    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt ,max_string_token_length=1000)
+    extracted_data = jsonformer()
+    return extracted_data
+
+def generate_scenario(movie_scene,movie_name, interaction_type, setting, relationship,model, tokenizer, json_schema, max_length):
+    messages = llama_3_scenario_prompt_creation(movie_scene,movie_name, interaction_type, setting, relationship)
+    prompt = tokenizer.apply_chat_template(messages, chat_template=chat_template, tokenize=False, add_generation_prompt=True, return_tensors="pt")
     jsonformer = Jsonformer(model, tokenizer, json_schema, prompt, max_string_token_length=1000)
     extracted_data = jsonformer()
     return extracted_data
 
-def generate_episode(movie1,movie2, interaction_type,scenario_name,scenario, setting, interaction, agent1, agent2, goals1,goals2,relationship, model, tokenizer, json_schema, max_length=50):
-    messages = llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario_name,scenario, setting, interaction, agent1, agent2, goals1,goals2,relationship)
+def generate_episode(movie1,movie2, interaction_type,scenario, agent1, agent2, goals1,goals2, relationship, model, tokenizer, json_schema, max_length=50):
+    messages = llama_3_episode_prompt_creation(movie1,movie2, interaction_type,scenario, agent1, agent2, goals1,goals2, relationship)
     # print(messages)
     prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, return_tensors="pt")
     jsonformer = Jsonformer(model, tokenizer, json_schema, prompt, max_string_token_length=1000)

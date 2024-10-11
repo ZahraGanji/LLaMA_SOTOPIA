@@ -7,26 +7,29 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 # model = AutoModelForCausalLM.from_pretrained(model_name)
 # source ~/NLP/venv/bin/activate
 #  source ~/localdisk/pythonvenv/bin/activate
-def llama_3_judge_prompt_creation(description):
+def llama_3_judge_prompt_creation(description, movie_name):
 
     json_format = {
-        "explanation": {"Why do you think given movie description is real or not"},
-        "is_real": {"Set to true if the movie scene is real. Set to false if movie scene is not real"},
+        "explanation": {"Why do you think given movie exists or not"},
+        "is_real": {"Set to true if the given movie exists and it is a real and well known movie. Set to false if movie scene is doesnt exist"},
     }
 
     system_message = f"""
     #### Persona: ###
-    "You are a movie expert. You know every movie scene by heart. Your job is to check whether the input movie scene description is real or not.\
-    If it's real - value of 'is_real' will be set to true, if it's not, it will be set to 'false'. Answer best to your movie knowledge. You will also state the reason for your choice"
+    Imagine you're a film expert with an exceptional memory for movie scenes.
+
+    Your task is to check whether the given movie: {movie_name}, with the given scene from it:{description}, is a real and existing, well known movie or not.\
+    If it exists - value of 'is_real' will be set to true, if it's not, it will be set to 'false'. Answer best to your movie knowledge. You will also state the reason for your choice"
 
     ### Goal: ###
-    If it's real - value of 'is_real' will be set to true, if it's not, it will be set to 'false'. Answer best to your movie knowledge. You will also state the reason for your choice
+    If the movie {movie_name} with this scene {description} exists, so its a real movie, - value of 'is_real' will be set to true, if it's not, it will be set to 'false'. Answer best to your movie knowledge. You will also state the reason for your choice
     """
 
     user_message = f"""
     ### Question: ###
-    Movie scene description: {description}
-
+    Is this movie: {movie_name}, with the given scene from it:{description}, is a real and existing, well known movie or not.
+    If it exists - value of 'is_real' will be set to true, if it's not, it will be set to 'false'. Answer best to your movie knowledge. You will also state the reason for your choice
+    
     ### Format: ###
     You should choose one of the options.
     Use the following json format:
@@ -38,12 +41,16 @@ def llama_3_judge_prompt_creation(description):
         ]
     
     return(messages)
-def evaluate_scene_v2(description, model, tokenizer, json_schema):
-    messages = llama_3_judge_prompt_creation(description)
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, return_tensors="pt")
-    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt, max_number_tokens=500,
-                        max_array_length=500,
-                        max_string_token_length=500)
+
+chat_template = """### System:
+{system_message}
+### User:
+{user_message}
+"""
+def evaluate_scene_v2(description,movie_name, model, tokenizer, json_schema):
+    messages = llama_3_judge_prompt_creation(description, movie_name)
+    prompt = tokenizer.apply_chat_template(messages, chat_template=chat_template, tokenize=False, add_generation_prompt=True, return_tensors="pt")
+    jsonformer = Jsonformer(model, tokenizer, json_schema, prompt)
     generated_data = jsonformer()
     return generated_data
 
