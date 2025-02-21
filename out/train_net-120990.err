@@ -1,39 +1,0 @@
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) Python/3.12.3-GCCcore-13.3.0
-
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) CUDA/12.4.0
-
-master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
-Downloading shards:   0%|          | 0/30 [00:00<?, ?it/s]Downloading shards:   3%|▎         | 1/30 [01:01<29:54, 61.88s/it]Downloading shards:   7%|▋         | 2/30 [12:29<3:20:41, 430.05s/it]Downloading shards:  10%|█         | 3/30 [13:39<1:59:27, 265.47s/it]Downloading shards:  13%|█▎        | 4/30 [36:28<5:03:56, 701.42s/it]Downloading shards:  17%|█▋        | 5/30 [37:38<3:17:15, 473.41s/it]Downloading shards:  20%|██        | 6/30 [38:40<2:13:30, 333.78s/it]Downloading shards:  23%|██▎       | 7/30 [39:46<1:34:19, 246.05s/it]Downloading shards:  27%|██▋       | 8/30 [41:28<1:13:24, 200.21s/it]Downloading shards:  30%|███       | 9/30 [49:51<1:43:10, 294.78s/it]Downloading shards:  33%|███▎      | 10/30 [51:56<1:20:52, 242.62s/it]Downloading shards:  37%|███▋      | 11/30 [53:00<59:26, 187.73s/it]  Downloading shards:  40%|████      | 12/30 [54:55<49:41, 165.63s/it]Downloading shards:  43%|████▎     | 13/30 [1:02:58<1:14:13, 261.95s/it]Downloading shards:  47%|████▋     | 14/30 [1:04:38<56:46, 212.89s/it]  Downloading shards:  50%|█████     | 15/30 [1:17:53<1:37:05, 388.34s/it]Downloading shards:  53%|█████▎    | 16/30 [1:20:05<1:12:37, 311.27s/it]Downloading shards:  53%|█████▎    | 16/30 [1:51:07<1:37:13, 416.71s/it]
-Traceback (most recent call last):
-  File "/home/s33zganj/LLaMA_SOTOPIA/pipeline.py", line 48, in <module>
-    "description": {"type": "string"},
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
-    return model_class.from_pretrained(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3693, in from_pretrained
-    resolved_archive_file, sharded_metadata = get_checkpoint_shard_files(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 1079, in get_checkpoint_shard_files
-    cached_filename = cached_file(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 402, in cached_file
-    resolved_file = hf_hub_download(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_deprecation.py", line 101, in inner_f
-    return f(*args, **kwargs)
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
-    return fn(*args, **kwargs)
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1240, in hf_hub_download
-    return _hf_hub_download_to_cache_dir(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1399, in _hf_hub_download_to_cache_dir
-    _create_symlink(blob_path, pointer_path, new_blob=True)
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 924, in _create_symlink
-    os.symlink(src_rel_or_abs, abs_dst)
-OSError: [Errno 122] Disk quota exceeded: '../../blobs/c6a9dac592a1b78119ee6bd06d39fc7ef6418aad1d18394ec129aa385f9721f9' -> '/home/s33zganj/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-70B/snapshots/b4d08b7db49d488da3ac49adf25a6b9ac01ae338/model-00017-of-00030.safetensors'
-ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 490972) of binary: /home/s33zganj/pytorch/bin/python
-Traceback (most recent call last):
-  File "/home/s33zganj/pytorch/bin/torchrun", line 8, in <module>
-    sys.exit(main())
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
-    return f(*args, **kwargs)
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/to

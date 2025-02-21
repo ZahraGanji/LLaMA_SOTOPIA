@@ -1,40 +1,0 @@
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) Python/3.12.3-GCCcore-13.3.0
-
-
-Due to MODULEPATH changes, the following have been reloaded:
-  1) CUDA/12.4.0
-
-master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.31s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.32s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.33s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.03it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.10s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.31s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.33s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.31s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.07it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.08s/it]
-/home/s33zganj/pytorch/lib/python3.10/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
-  return self.fget.__get__(instance, owner)()
-WARNING:root:Some parameters are on the meta device device because they were offloaded to the cpu.
-/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
-  warnings.warn(
-Downloading shards:   0%|          | 0/4 [00:00<?, ?it/s]Downloading shards:   0%|          | 0/4 [01:13<?, ?it/s]
-Traceback (most recent call last):
-  File "/home/s33zganj/LLaMA_SOTOPIA/pipeline.py", line 75, in <module>
-    judge_model = AutoModelForCausalLM.from_pretrained(judge_model_name, device_map="auto")
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
-    return model_class.from_pretrained(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3693, in from_pretrained
-    resolved_archive_file, sharded_metadata = get_checkpoint_shard_files(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 1079, in get_checkpoint_shard_files
-    cached_filename = cached_file(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/transformers/utils/hub.py", line 402, in cached_file
-    resolved_file = hf_hub_download(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_deprecation.py", line 101, in inner_f
-    return f(*args, **kwargs)
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
-    return fn(*args, **kwargs)
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1240, in hf_hub_download
-    return _hf_hub_download_to_cache_dir(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1389, in _hf_hub_download_to_cache_dir
-    _download_to_tmp_and_move(
-  File "/home/s33zganj/pytorch/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1903, in _download_to_tmp_and_move
-    with incomplete_path.open("ab") as f:
-OSError: [Errno 122] Disk quota exceeded
-ERROR:torch.distributed.elastic.multiprocessing.api:failed (
