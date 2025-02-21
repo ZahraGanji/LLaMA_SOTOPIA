@@ -1,4 +1,4 @@
-# Simulating Social Interactions With Movie-Driven Scenarios
+# Movie-Driven Social Interaction Simulations for Evaluating Social Intelligence in Language Agents
 
 ## Motivation
 
